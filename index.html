@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+    <title>login page</title>
+  </head>
+  <body class="section">
+    <div
+      class="section mt-lg-5 d-flex align-items-center justify-content-center mx-auto"
+    >
+      <div class="left p-lg-2 mx-0">
+        <img
+          src="/img/Clip_recruting_ad_transparent_by_Icons8.gif"
+          alt="it is a gif"
+          width="75%"
+          height="75%"
+        />
+      </div>
+      <div class="right d-flex flex-column">
+        <div class="pb-5 pt-5 pt-sm-2 text-center">
+          <h6 class="text-white mb-0 pb-3">
+            <span>Google </span><span>Facebook</span>
+          </h6>
+          <input class="checkbox" type="checkbox" id="reg-log" name="reg-log" />
+          <label for="reg-log"></label>
+          <div class="card-3d-wrap mx-auto">
+            <div class="card-3d-wrapper">
+              <div class="card-front d-flex flex-column p-5">
+                <h4 class="text-white pb-5">Google</h4>
+                <div class="d-flex flex-row justify-content-center">
+                  <button class="google p-2 rounded-3 text-white" id="login">
+                    Sign In with Google
+                  </button>
+                </div>
+              </div>
+              <div class="card-back d-flex flex-column p-5">
+                <h4 class="text-white pb-5">Facebook</h4>
+                <div class="d-flex flex-row justify-content-center">
+                  <button class="facebook p-2 rounded-3" id="loginfb">
+                    Sign In with facebook
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- <script src="https://apis.google.com/js/platform.js" async defer></script> -->
+  <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-analytics.js";
+      import { getAuth ,GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider } from "https://www.gstatic.com/firebasejs/9.6.4/firebase-auth.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAr7a8pmrG9h06nv4atTy421k15GgLnj-I",
+        authDomain: "login-fc51a.firebaseapp.com",
+        projectId: "login-fc51a",
+        storageBucket: "login-fc51a.appspot.com",
+        messagingSenderId: "235005227061",
+        appId: "1:235005227061:web:7fab3659d1ac858f04017c",
+        measurementId: "G-61GBF7W4GJ"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+      const auth=getAuth(app);
+      const provider = new GoogleAuthProvider(app);
+      const provider = new FacebookAuthProvider(app);
+
+      login.addEventListener('click',(e)=>{
+        signInWithRedirect(auth, provider);
+
+        getRedirectResult(auth)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access Google APIs.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+
+      // The signed-in user info.
+      const user = result.user;
+    }).catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      // The email of the user's account used.
+      const email = error.email;
+      // The AuthCredential type that was used.
+      const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+      });
+    });
+
+    loginfb.addEventListener('click',(e)=>{
+        signInWithRedirect(auth, provider);
+
+        getRedirectResult(auth)
+    .then((result) => {
+      const credential = FacebookAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    const user = result.user;
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // AuthCredential type that was used.
+    const credential = FacebookAuthProvider.credentialFromError(error);
+    // ...
+  });
+    });
+  </script>
+</html>
